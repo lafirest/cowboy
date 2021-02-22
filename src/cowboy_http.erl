@@ -159,17 +159,7 @@
 init(Parent, Ref, Socket, Transport, ProxyHeader, Opts) ->
 	Peer0 = Transport:peername(Socket),
 	Sock0 = Transport:sockname(Socket),
-	Cert1 = case Transport:name() of
-		ssl ->
-			case ssl:peercert(Socket) of
-				{error, no_peercert} ->
-					{ok, undefined};
-				Cert0 ->
-					Cert0
-			end;
-		_ ->
-			{ok, undefined}
-	end,
+	Cert1 = {ok, undefined},
 	case {Peer0, Sock0, Cert1} of
 		{{ok, Peer}, {ok, Sock}, {ok, Cert}} ->
 			State = #state{
